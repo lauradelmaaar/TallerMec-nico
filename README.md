@@ -29,7 +29,7 @@ Implementar un API REST mediante Flask (u otra herramienta de su elección) que 
 ### Imagen del Modelo Entidad-Relación del Taller Mecánico
 ![](https://github.com/lauradelmaaar/TallerMecanico/blob/main/images/Taller_ModeloEntidadRelacion.jpg?raw=true)
 ### Imagen del grafo relacional realizado
-![](![image](https://github.com/lauradelmaaar/TallerMecanico/assets/127884273/bb625d5b-7e77-476f-98de-e549c932cd3b))
+![](https://github.com/lauradelmaaar/TallerMecanico/blob/main/images/grafo%20relacional.jpg?raw=true)
 ### Imagen del diseño conceptual realizado
 ![](https://github.com/lauradelmaaar/TallerMecanico/blob/main/images/Taller_ModeloConceptual.jpg?raw=true)
 
