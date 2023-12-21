@@ -1,3 +1,32 @@
+-- Borra las tablas si existen
+DROP TABLE IF EXISTS Comanda;
+DROP TABLE IF EXISTS Tarea;
+DROP TABLE IF EXISTS Pieza;
+DROP TABLE IF EXISTS Consumible;
+DROP TABLE IF EXISTS Factura;
+DROP TABLE IF EXISTS Empleado;
+DROP TABLE IF EXISTS Cliente;
+DROP TABLE IF EXISTS SolicitudCita;
+DROP TABLE IF EXISTS Marca;
+DROP TABLE IF EXISTS Modelo;
+DROP TABLE IF EXISTS Vehiculo;
+DROP TABLE IF EXISTS Proveedor;
+DROP TABLE IF EXISTS Revision;
+DROP TABLE IF EXISTS Problema;
+DROP TABLE IF EXISTS Modelo_Tarea;
+DROP TABLE IF EXISTS Revision_Tarea;
+DROP TABLE IF EXISTS Reporte;
+DROP TABLE IF EXISTS no_Planificada;
+DROP TABLE IF EXISTS Modelo_Pieza;
+DROP TABLE IF EXISTS Cantidad_Pieza_Tarea;
+DROP TABLE IF EXISTS Cantidad_Consumible_Tarea;
+DROP TABLE IF EXISTS Cantidad_Consumible_Comanda;
+DROP TABLE IF EXISTS Cantidad_Pieza_Comanda;
+DROP TABLE IF EXISTS pedido_Pieza;
+DROP TABLE IF EXISTS pedido_Consumible;
+DROP TABLE IF EXISTS ProveedorTelefono;
+
+
 CREATE TABLE IF NOT EXISTS Comanda (
     id_Comanda SERIAL PRIMARY KEY,
     precio_Total NUMERIC(10, 2) NOT NULL CHECK(precio_Total >= 0.00)
