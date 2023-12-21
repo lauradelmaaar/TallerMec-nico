@@ -56,7 +56,6 @@ DROP TABLE IF EXISTS pedido_Pieza;
 DROP TABLE IF EXISTS pedido_Consumible;
 DROP TABLE IF EXISTS ProveedorTelefono;
 
-
 CREATE TABLE IF NOT EXISTS Comanda (
     id_Comanda SERIAL PRIMARY KEY,
     precio_Total NUMERIC(10, 2) NOT NULL CHECK(precio_Total >= 0.00)
@@ -80,7 +79,7 @@ CREATE TABLE IF NOT EXISTS Pieza (
 
 CREATE TABLE IF NOT EXISTS Consumible (
     id_Consumible SERIAL PRIMARY KEY,
-    nombre VARCHAR(20) NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
     precio NUMERIC(10, 2) NOT NULL CHECK(precio >= 0.00),
     litros_por_unidad NUMERIC(5, 2) NOT NULL CHECK(litros_por_unidad >= 0.00)
 );
@@ -95,7 +94,7 @@ CREATE TABLE IF NOT EXISTS Factura (
 CREATE TABLE IF NOT EXISTS Empleado (
     dni VARCHAR(9) PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
-    turno VARCHAR(7) NOT NULL,
+    turno VARCHAR(10) NOT NULL,
     direccion TEXT, 
     telefono VARCHAR(20) NOT NULL,
     email VARCHAR(30) NOT NULL,
@@ -221,15 +220,15 @@ CREATE TABLE IF NOT EXISTS Cantidad_Pieza_Comanda (
     id_Comanda INT REFERENCES Comanda(id_Comanda)
 );
 
-CREATE TABLE IF NOT EXISTS pedido_Pieza (
-    id_Pedido SERIAL PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS oferta_pieza (
+    id_oferta_pieza SERIAL PRIMARY KEY,
     id_Pieza INT REFERENCES Pieza(id_Pieza),
     codigo_Proveedor INT REFERENCES Proveedor(codigo),
     cantidad INT NOT NULL CHECK(cantidad >= 0)
 );
 
-CREATE TABLE IF NOT EXISTS pedido_Consumible (
-    id_Pedido SERIAL PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS oferta_consumible (
+    id_oferta_consumible SERIAL PRIMARY KEY,
     id_Consumible INT REFERENCES Consumible(id_Consumible),
     codigo_Proveedor INT REFERENCES Proveedor(codigo),
     cantidad INT NOT NULL CHECK(cantidad >= 0)
@@ -239,23 +238,7 @@ CREATE TABLE IF NOT EXISTS ProveedorTelefono (
     telefono VARCHAR(20) PRIMARY KEY,
     codigo_proveedor INT REFERENCES Proveedor(codigo)
 );
-
--- Trigger para calcular el coste total en la tabla Comanda
-CREATE OR REPLACE FUNCTION calcular_coste_total()
-RETURNS TRIGGER AS $$
-BEGIN
-    NEW.precio_Total = (SELECT SUM(cantidad * precio)
-                       FROM Cantidad_Pieza_Comanda cpc
-                       JOIN Pieza p ON cpc.id_Pieza = p.id_Pieza
-                       WHERE cpc.id_Comanda = NEW.id_Comanda);
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER actualizar_coste_total
-BEFORE INSERT OR UPDATE ON Cantidad_Pieza_Comanda
-FOR EACH ROW EXECUTE FUNCTION calcular_coste_total();
-
+--------------------------------------------------------------------------------------------------
 -- Trigger para evitar duplicados en la tabla Tarea
 CREATE OR REPLACE FUNCTION evitar_duplicados_tarea()
 RETURNS TRIGGER AS $$
@@ -451,11 +434,11 @@ CREATE TRIGGER verificar_num_referencia_unico
 BEFORE INSERT OR UPDATE ON Reporte
 FOR EACH ROW EXECUTE FUNCTION asegurar_num_referencia_unico();
 
--- Trigger para asegurar que el id_Pedido sea único en la tabla pedido_Pieza
+-- Trigger para asegurar que el id_Pedido sea único en la tabla oferta_pieza
 CREATE OR REPLACE FUNCTION asegurar_id_pedido_unico_pieza()
 RETURNS TRIGGER AS $$
 BEGIN
-    IF (SELECT COUNT(*) FROM pedido_Pieza WHERE id_Pedido = NEW.id_Pedido) > 0 THEN
+    IF (SELECT COUNT(*) FROM oferta_pieza WHERE id_oferta_pieza = NEW.id_oferta_pieza) > 0 THEN
         RAISE EXCEPTION 'Ya existe un pedido de pieza con el mismo ID de pedido';
     END IF;
     RETURN NEW;
@@ -463,14 +446,14 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER verificar_id_pedido_unico_pieza
-BEFORE INSERT OR UPDATE ON pedido_Pieza
+BEFORE INSERT OR UPDATE ON oferta_pieza
 FOR EACH ROW EXECUTE FUNCTION asegurar_id_pedido_unico_pieza();
 
--- Trigger para asegurar que el id_Pedido sea único en la tabla pedido_Consumible
+-- Trigger para asegurar que el id_Pedido sea único en la tabla oferta_consumible
 CREATE OR REPLACE FUNCTION asegurar_id_pedido_unico_consumible()
 RETURNS TRIGGER AS $$
 BEGIN
-    IF (SELECT COUNT(*) FROM pedido_Consumible WHERE id_Pedido = NEW.id_Pedido) > 0 THEN
+    IF (SELECT COUNT(*) FROM oferta_consumible WHERE id_oferta_consumible = NEW.id_oferta_consumible) > 0 THEN
         RAISE EXCEPTION 'Ya existe un pedido de consumible con el mismo ID de pedido';
     END IF;
     RETURN NEW;
@@ -478,7 +461,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER verificar_id_pedido_unico_consumible
-BEFORE INSERT OR UPDATE ON pedido_Consumible
+BEFORE INSERT OR UPDATE ON oferta_consumible
 FOR EACH ROW EXECUTE FUNCTION asegurar_id_pedido_unico_consumible();
 
 -- Trigger para asegurar que el telefono sea único en la tabla ProveedorTelefono
@@ -495,7 +478,7 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER verificar_telefono_unico_proveedor
 BEFORE INSERT OR UPDATE ON ProveedorTelefono
 FOR EACH ROW EXECUTE FUNCTION asegurar_telefono_unico_proveedor();
--------------------------------------------------------------------------------------------------------------
+
 -- Trigger para asegurar que el precio total de una comanda no sea negativo
 CREATE OR REPLACE FUNCTION comprobar_precio_comanda()
 RETURNS TRIGGER AS $$
