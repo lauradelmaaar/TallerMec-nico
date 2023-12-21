@@ -29,5 +29,5 @@ Implementar un API REST mediante Flask (u otra herramienta de su elección) que 
 ### Imagen del Modelo Entidad-Relación del Taller Mecánico
 
 ### Imagen del diseño conceptual realizado
-
+![](images/Taller_ModeloConceptual.jpg)
 ### Imagen del grafo relacional realizado
