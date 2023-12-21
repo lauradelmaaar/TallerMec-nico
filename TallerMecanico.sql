@@ -1,3 +1,33 @@
+/*
+Tablas sobre as que vamos a trabajar
+    Comanda
+    Tarea
+    Pieza
+    Consumible
+    Factura
+    Empleado
+    Cliente
+    SolicitudCita
+    Marca
+    Modelo
+    Vehiculo
+    Proveedor
+    Revision
+    Problema
+    Modelo_Tarea
+    Revision_Tarea
+    Reporte
+    no_Planificada
+    Modelo_Pieza
+    Cantidad_Pieza_Tarea
+    Cantidad_Consumible_Tarea
+    Cantidad_Consumible_Comanda
+    Cantidad_Pieza_Comanda
+    pedido_Pieza
+    pedido_Consumible
+    ProveedorTelefono
+*/
+
 -- Borra las tablas si existen
 DROP TABLE IF EXISTS Comanda;
 DROP TABLE IF EXISTS Tarea;
