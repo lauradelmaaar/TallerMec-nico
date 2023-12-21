@@ -27,7 +27,9 @@ Implementar un API REST mediante Flask (u otra herramienta de su elección) que 
 - [Draw.io](https://www.drawio.com/)
 ## Entrega
 ### Imagen del Modelo Entidad-Relación del Taller Mecánico
+![](https://github.com/lauradelmaaar/TallerMecanico/blob/main/images/Taller_ModeloEntidadRelacion.jpg?raw=true)
+### Imagen del grafo relacional realizado
 
 ### Imagen del diseño conceptual realizado
 ![](https://github.com/lauradelmaaar/TallerMecanico/blob/main/images/Taller_ModeloConceptual.jpg?raw=true)
-### Imagen del grafo relacional realizado
+
