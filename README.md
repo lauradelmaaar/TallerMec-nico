@@ -3,7 +3,7 @@
 ## Proyecto Final - Taller Mecanico 
 ## Autores
 - Laura Del Mar Jerez Ramirez (alu0101688619@ull.edu.es)
-- Nicolás 
+- Nicolás Joaquín Miranda Lizondo (alu0101683027@ull.edu.es) 
 ## Enunciado de la Práctica
 ### Objetivos
 Los principales objetivos de esta práctica son los siguientes:
